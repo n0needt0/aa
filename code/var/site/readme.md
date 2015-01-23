@@ -1,46 +1,25 @@
-## Laravel 4 with Sentry 2 and Bootstrap
+## Laravel PHP Framework
 
-This is a demo of [Sentry 2](https://github.com/cartalyst/sentry) integrated with [Laravel 4](https://github.com/laravel/laravel/tree/develop) and [Bootstrap](http://twitter.github.com/bootstrap/index.html).
+[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
+[![Total Downloads](https://poser.pugx.org/laravel/framework/downloads.svg)](https://packagist.org/packages/laravel/framework)
+[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
+[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
+[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
 
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, and caching.
 
-### Instructions
+Laravel aims to make the development process a pleasing one for the developer without sacrificing application functionality. Happy developers make the best code. To this end, we've attempted to combine the very best of what we have seen in other web frameworks, including frameworks implemented in other languages, such as Ruby on Rails, ASP.NET MVC, and Sinatra.
 
-After you have cloned this repo to your development environment, [install & run composer](http://niallobrien.me/2013/03/installing-and-updating-laravel-4/): 
+Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
 
-	curl -sS https://getcomposer.org/installer | php
-	php composer.phar install
+## Official Documentation
 
-Next, run the Sentry 2 Migrations: 
+Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
 
-	php artisan migrate --package=cartalyst/sentry
+### Contributing To Laravel
 
-Use the seeds provided in this repo to set up the initial user accounts: 
+**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
 
-	php artisan db:seed
+### License
 
-Edit the /app/config/mail.php to work for your dev environment and then you should be good to go. 
-
-### Seeds
-The seeds in this repo will create two groups and two user accounts.
-
-__Groups__
-* Users
-* Admins
-
-__Users__
-* user@user.com  *Password: sentryuser*
-* admin@admin.com *Password: sentryadmin*
-
-### Notes
-
-* Please let me know if you have any problems.  
-* Sentry 2 is still in active development - I will strive to keep this project updated as they move towards a stable release. 
-* There are several Sentry 2 features that I have not included here (mainly User Specific Permissions and Banning).  I will add these eventually.
-* The GroupController is restful and the UserController is not; only because I wanted to experiment with both methods.
-* I have been a bit sloppy with how I handle "Admin" access checking in the UserController - I hope to clean this up soon.
-* There are currently no tests here, beyond the tests provided with Sentry 2 and Laravel 4.  I am not yet hip enough to TDD to add these in a meaningful way.
-* Currently all mail is being sent inline - eventually I will switch this over to use the new Queue feature in Laravel 4.
-
-
-=======
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)

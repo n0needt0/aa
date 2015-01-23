@@ -1,11 +1,12 @@
 {
+	"name": "laravel/laravel",
+	"description": "The Laravel Framework.",
+	"keywords": ["framework", "laravel"],
+	"license": "MIT",
+	"type": "project",
 	"require": {
-		"laravel/framework": "4.1.*",
-		"cartalyst/sentry": "2.0.*",
-		"lj4/redbean-laravel4": "dev-master",
-		"omnipay/paypal": "~2.0",
-		"mtdowling/cron-expression": "1.0.*"
-		
+		"laravel/framework": "4.2.*",
+		"cartalyst/sentry": "2.0.*"
 	},
 	"autoload": {
 		"classmap": [
@@ -22,9 +23,22 @@
 	"psr-0": {
          "Lasdorf": "app/libraries"
     },
-    
+
 	"scripts": {
-		"post-update-cmd": "php artisan optimize"
+		"post-install-cmd": [
+			"php artisan clear-compiled",
+			"php artisan optimize"
+		],
+		"post-update-cmd": [
+			"php artisan clear-compiled",
+			"php artisan optimize"
+		],
+		"post-create-project-cmd": [
+			"php artisan key:generate"
+		]
 	},
-	"minimum-stability": "dev"
+	"config": {
+		"preferred-install": "dist"
+	},
+	"minimum-stability": "stable"
 }

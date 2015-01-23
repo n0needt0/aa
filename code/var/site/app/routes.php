@@ -11,18 +11,31 @@
 |
 */
 
-Route::get('/', 'CronratController@getIndex');
-Route::get('/in', 'CronratController@getIn');
-Route::get('/help', 'CronratController@getFaq');
+Route::get('/', function()
+{
+	return View::make('hello');
+});
 
-Route::get('/r/{ratkey?}', 'CronratUrl@getCr');
+/*
+Route::group(array('domain' => 'base.this.com'), function()
+{
 
-Route::post('/r/{ratkey?}', 'CronratUrl@getCr');
+    Route::get('/', 'HomeController@showWelcome');
 
-Route::controller('users', 'UserController');
+    Route::controller('users', 'UserController');
 
-Route::controller('cronrat', 'CronratController');
+    Route::controller('verify', 'VerifyController');
 
-Route::controller('verify', 'VerifyController');
+    Route::resource('groups', 'GroupController');
 
-Route::resource('groups', 'GroupController');
+    Route::controller('emd', 'EmdController');
+
+});
+
+Route::group(array('domain' => 'wb.this.com'), function()
+{
+    Route::get('/', 'WbController@getPage');
+    Route::get('/wb/{page?}', 'WbController@getPage');
+});
+
+**/

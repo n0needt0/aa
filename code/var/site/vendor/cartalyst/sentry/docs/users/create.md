@@ -28,7 +28,7 @@ This exception will be thrown when the user you are trying to create already
 exists on your database.
 
 What this means is, if your `login` field is `email` and that email address is
-already registered on your database, you can't use this email for this user.
+already registerd on your database, you can't use this email for this user.
 
 #### Examples
 
@@ -96,7 +96,7 @@ will be thrown.
 	}
 	catch (Cartalyst\Sentry\Users\PasswordRequiredException $e)
 	{
-		echo 'Password field is required.';
+		echo 'Password field is required.'
 	}
 	catch (Cartalyst\Sentry\Users\UserExistsException $e)
 	{

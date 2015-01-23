@@ -13,13 +13,13 @@
 
 App::before(function($request)
 {
-    //
+	//
 });
 
 
 App::after(function($request, $response)
 {
-    //
+	//
 });
 
 /*
@@ -35,25 +35,23 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-    if (!Sentry::check())
-    {
-        return Redirect::to('users/login');
-    }
+	if (Auth::guest())
+	{
+		if (Request::ajax())
+		{
+			return Response::make('Unauthorized', 401);
+		}
+		else
+		{
+			return Redirect::guest('login');
+		}
+	}
 });
 
-Route::filter('admin_auth', function()
-{
-    if (!Sentry::check())
-    {
-        // if not logged in, redirect to login
-        return Redirect::to('users/login');
-    }
 
-    if (!Sentry::getUser()->hasAccess('admin'))
-    {
-        // has no access
-        return Response::make('Access Forbidden', '403');
-    }
+Route::filter('auth.basic', function()
+{
+	return Auth::basic();
 });
 
 /*
@@ -69,7 +67,7 @@ Route::filter('admin_auth', function()
 
 Route::filter('guest', function()
 {
-    if (Auth::check()) return Redirect::to('/');
+	if (Auth::check()) return Redirect::to('/');
 });
 
 /*
@@ -85,12 +83,8 @@ Route::filter('guest', function()
 
 Route::filter('csrf', function()
 {
-    // var_dump($_SESSION);
- //            var_dump($_POST);
- //            die();
-
-    if (Session::token() != Input::get('_token'))
-    {
-        throw new Illuminate\Session\TokenMismatchException;
-    }
+	if (Session::token() != Input::get('_token'))
+	{
+		throw new Illuminate\Session\TokenMismatchException;
+	}
 });
