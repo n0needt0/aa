@@ -12,6 +12,19 @@ class ValidationValidatorTest extends PHPUnit_Framework_TestCase {
 	}
 
 
+	public function testSometimesWorksOnNestedArrays()
+	{
+		$trans = $this->getRealTranslator();
+		$v = new Validator($trans, array('foo' => array('bar' => array('baz' => ''))), array('foo.bar.baz' => 'sometimes|required'));
+		$this->assertFalse($v->passes());
+		$this->assertEquals(array('foo.bar.baz' => array('Required' => array())), $v->failed());
+
+		$trans = $this->getRealTranslator();
+		$v = new Validator($trans, array('foo' => array('bar' => array('baz' => 'nonEmpty'))), array('foo.bar.baz' => 'sometimes|required'));
+		$this->assertTrue($v->passes());
+	}
+	
+
 	public function testHasFailedValidationRules()
 	{
 		$trans = $this->getRealTranslator();
@@ -161,6 +174,7 @@ class ValidationValidatorTest extends PHPUnit_Framework_TestCase {
 		$v = new Validator($trans, array('name' => $file), array('name' => 'Required'));
 		$this->assertTrue($v->passes());
 	}
+
 
 	public function testValidateRequiredWith()
 	{
@@ -894,6 +908,7 @@ class ValidationValidatorTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($v->passes());
 	}
 
+
 	public function testValidateDateAndFormat()
 	{
 		date_default_timezone_set('UTC');
@@ -910,6 +925,7 @@ class ValidationValidatorTest extends PHPUnit_Framework_TestCase {
 		$v = new Validator($trans, array('x' => '01/01/2001'), array('x' => 'date_format:Y-m-d'));
 		$this->assertTrue($v->fails());
 	}
+
 
 	public function testBeforeAndAfter()
 	{

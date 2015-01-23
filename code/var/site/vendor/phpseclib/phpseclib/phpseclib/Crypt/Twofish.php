@@ -14,7 +14,7 @@
  * Here's a short example of how to use this library:
  * <code>
  * <?php
- *    include('Crypt/Twofish.php');
+ *    include 'Crypt/Twofish.php';
  *
  *    $twofish = new Crypt_Twofish();
  *
@@ -48,7 +48,7 @@
  * @package   Crypt_Twofish
  * @author    Jim Wigginton <terrafrost@php.net>
  * @author    Hans-Juergen Petrich <petrich@tronic-media.com>
- * @copyright MMVII Jim Wigginton
+ * @copyright 2007 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  * @link      http://phpseclib.sourceforge.net
  */
@@ -103,7 +103,7 @@ define('CRYPT_TWOFISH_MODE_OFB', CRYPT_MODE_OFB);
 
 /**#@+
  * @access private
- * @see Crypt_Twofish::Crypt_Twofish()
+ * @see Crypt_Base::Crypt_Base()
  */
 /**
  * Toggles the internal implementation
@@ -447,34 +447,6 @@ class Crypt_Twofish extends Crypt_Base
     var $kl;
 
     /**
-     * Default Constructor.
-     *
-     * Determines whether or not the mcrypt extension should be used.
-     *
-     * $mode could be:
-     *
-     * - CRYPT_TWOFISH_MODE_ECB
-     *
-     * - CRYPT_TWOFISH_MODE_CBC
-     *
-     * - CRYPT_TWOFISH_MODE_CTR
-     *
-     * - CRYPT_TWOFISH_MODE_CFB
-     *
-     * - CRYPT_TWOFISH_MODE_OFB
-     *
-     * If not explicitly set, CRYPT_TWOFISH_MODE_CBC will be used.
-     *
-     * @see Crypt_Base::Crypt_Base()
-     * @param optional Integer $mode
-     * @access public
-     */
-    function Crypt_Twofish($mode = CRYPT_TWOFISH_MODE_CBC)
-    {
-        parent::Crypt_Base($mode);
-    }
-
-    /**
      * Sets the key.
      *
      * Keys can be of any length. Twofish, itself, requires the use of a key that's 128, 192 or 256-bits long.
@@ -707,10 +679,12 @@ class Crypt_Twofish extends Crypt_Base
             $R1 = ((($R1 >> 31) & 1) | ($R1 << 1)) ^ ($t0 + ($t1 << 1) + $K[++$ki]);
         }
 
+        // @codingStandardsIgnoreStart
         return pack("V4", $K[4] ^ $R2,
                           $K[5] ^ $R3,
                           $K[6] ^ $R0,
                           $K[7] ^ $R1);
+        // @codingStandardsIgnoreEnd
     }
 
     /**
@@ -761,10 +735,12 @@ class Crypt_Twofish extends Crypt_Base
             $R0 = ($R0 >> 31 & 0x1 | $R0 << 1) ^ ($t0 + $t1 + $K[--$ki]);
         }
 
+        // @codingStandardsIgnoreStart
         return pack("V4", $K[0] ^ $R2,
                           $K[1] ^ $R3,
                           $K[2] ^ $R0,
                           $K[3] ^ $R1);
+        // @codingStandardsIgnoreEnd
     }
 
     /**

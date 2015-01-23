@@ -1,4 +1,7 @@
 <?php
+/**
+ * Credit Card class
+ */
 
 namespace Omnipay\Common;
 
@@ -9,6 +12,9 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * Credit Card class
+ *
+ * This class defines and abstracts all of the credit card types used
+ * throughout the Omnipay system.
  */
 class CreditCard
 {
@@ -142,6 +148,19 @@ class CreditCard
         }
     }
 
+    public function getTitle()
+    {
+        return $this->getBillingTitle();
+    }
+
+    public function setTitle($value)
+    {
+        $this->setBillingTitle($value);
+        $this->setShippingTitle($value);
+
+        return $this;
+    }
+
     public function getFirstName()
     {
         return $this->getBillingFirstName();
@@ -195,6 +214,19 @@ class CreditCard
     public function getNumberLastFour()
     {
         return substr($this->getNumber(), -4, 4) ?: null;
+    }
+
+    /**
+     * Returns a masked credit card number with only the last 4 chars visible
+     *
+     * @param string $mask Character to use in place of numbers
+     * @return string
+     */
+    public function getNumberMasked($mask = 'X')
+    {
+        $maskLength = strlen($this->getNumber()) - 4;
+
+        return str_repeat($mask, $maskLength) . $this->getNumberLastFour();
     }
 
     /**
@@ -295,6 +327,16 @@ class CreditCard
     public function setIssueNumber($value)
     {
         return $this->setParameter('issueNumber', $value);
+    }
+
+    public function getBillingTitle()
+    {
+        return $this->getParameter('billingTitle');
+    }
+
+    public function setBillingTitle($value)
+    {
+        return $this->setParameter('billingTitle', $value);
     }
 
     public function getBillingName()
@@ -411,6 +453,26 @@ class CreditCard
         return $this->setParameter('billingPhone', $value);
     }
 
+    public function getBillingFax()
+    {
+        return $this->getParameter('billingFax');
+    }
+
+    public function setBillingFax($value)
+    {
+        return $this->setParameter('billingFax', $value);
+    }
+
+    public function getShippingTitle()
+    {
+        return $this->getParameter('shippingTitle');
+    }
+
+    public function setShippingTitle($value)
+    {
+        return $this->setParameter('shippingTitle', $value);
+    }
+
     public function getShippingName()
     {
         return trim($this->getShippingFirstName() . ' ' . $this->getShippingLastName());
@@ -525,6 +587,16 @@ class CreditCard
         return $this->setParameter('shippingPhone', $value);
     }
 
+    public function getShippingFax()
+    {
+        return $this->getParameter('shippingFax');
+    }
+
+    public function setShippingFax($value)
+    {
+        return $this->setParameter('shippingFax', $value);
+    }
+
     public function getAddress1()
     {
         return $this->getParameter('billingAddress1');
@@ -612,6 +684,19 @@ class CreditCard
     {
         $this->setParameter('billingPhone', $value);
         $this->setParameter('shippingPhone', $value);
+
+        return $this;
+    }
+
+    public function getFax()
+    {
+        return $this->getParameter('billingFax');
+    }
+
+    public function setFax($value)
+    {
+        $this->setParameter('billingFax', $value);
+        $this->setParameter('shippingFax', $value);
 
         return $this;
     }

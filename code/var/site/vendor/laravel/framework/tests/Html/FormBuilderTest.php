@@ -85,6 +85,7 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('<input name="password" type="password" value="">', $form1);
 	}
 
+
 	public function testFilesNotFilled()
 	{
 		$this->formBuilder->setSessionStore($session = m::mock('Illuminate\Session\Store'));
@@ -329,6 +330,16 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 	}
 
 
+	public function testFormCheckboxWithoutSession()
+	{
+	    $form1 = $this->formBuilder->checkbox('foo');
+	    $form2 = $this->formBuilder->checkbox('foo', 'foobar', true);
+
+	    $this->assertEquals('<input name="foo" type="checkbox" value="1">', $form1);
+	    $this->assertEquals('<input checked="checked" name="foo" type="checkbox" value="foobar">', $form2);
+	}
+
+
 	public function testFormRadio()
 	{
 		$form1 = $this->formBuilder->input('radio', 'foo');
@@ -414,10 +425,12 @@ class FormBuilderModelStub {
 		}
 	}
 
+
 	public function __get($key)
 	{
 		return $this->data[$key];
 	}
+
 
 	public function __isset($key)
 	{

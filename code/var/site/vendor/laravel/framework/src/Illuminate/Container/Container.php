@@ -165,7 +165,7 @@ class Container implements ArrayAccess {
 	 * @param  string               $abstract
 	 * @param  Closure|string|null  $concrete
 	 * @param  bool                 $shared
-	 * @return bool
+	 * @return void
 	 */
 	public function bindIf($abstract, $concrete = null, $shared = false)
 	{
@@ -476,7 +476,7 @@ class Container implements ArrayAccess {
 	 */
 	protected function missingLeadingSlash($abstract)
 	{
-		return is_string($abstract) && ! starts_with($abstract, '\\');
+		return is_string($abstract) && strpos($abstract, '\\') !== 0;
 	}
 
 	/**

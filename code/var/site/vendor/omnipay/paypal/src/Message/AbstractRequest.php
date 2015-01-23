@@ -82,6 +82,26 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('headerImageUrl', $value);
     }
 
+    public function getLogoImageUrl()
+    {
+        return $this->getParameter('logoImageUrl');
+    }
+
+    public function setLogoImageUrl($value)
+    {
+        return $this->setParameter('logoImageUrl', $value);
+    }
+
+    public function getBorderColor()
+    {
+        return $this->getParameter('borderColor');
+    }
+
+    public function setBorderColor($value)
+    {
+        return $this->setParameter('borderColor', $value);
+    }
+
     public function getBrandName()
     {
         return $this->getParameter('brandName');
@@ -122,10 +142,106 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('addressOverride', $value);
     }
 
-    protected function getBaseData($method)
+    public function getMaxAmount()
+    {
+        return $this->getParameter('maxAmount');
+    }
+
+    public function setMaxAmount($value)
+    {
+        return $this->setParameter('maxAmount', $value);
+    }
+
+    public function getTaxAmount()
+    {
+        return $this->getParameter('taxAmount');
+    }
+
+    public function setTaxAmount($value)
+    {
+        return $this->setParameter('taxAmount', $value);
+    }
+
+    public function getShippingAmount()
+    {
+        return $this->getParameter('shippingAmount');
+    }
+
+    public function setShippingAmount($value)
+    {
+        return $this->setParameter('shippingAmount', $value);
+    }
+
+    public function getHandlingAmount()
+    {
+        return $this->getParameter('handlingAmount');
+    }
+
+    public function setHandlingAmount($value)
+    {
+        return $this->setParameter('handlingAmount', $value);
+    }
+
+    public function getShippingDiscount()
+    {
+        return $this->getParameter('shippingDiscount');
+    }
+
+    public function setShippingDiscount($value)
+    {
+        return $this->setParameter('shippingDiscount', $value);
+    }
+
+    public function getInsuranceAmount()
+    {
+        return $this->getParameter('insuranceAmount');
+    }
+
+    public function setInsuranceAmount($value)
+    {
+        return $this->setParameter('insuranceAmount', $value);
+    }
+
+    public function getLocaleCode()
+    {
+        return $this->getParameter('localeCode');
+    }
+
+    /*
+     * Used to change the locale of PayPal pages.
+     * Accepts 2 or 5 character language codes as described here:
+     * https://developer.paypal.com/docs/classic/express-checkout/integration-guide/ECCustomizing/
+     *
+     * If no value/invalid value is passed, the gateway will default it for you
+    */
+    public function setLocaleCode($value)
+    {
+        return $this->setParameter('localeCode', $value);
+    }
+
+    public function setCustomerServiceNumber($value)
+    {
+        return $this->setParameter('customerServiceNumber', $value);
+    }
+
+    public function getCustomerServiceNumber()
+    {
+        return $this->getParameter('customerServiceNumber');
+    }
+
+    public function setSellerPaypalAccountId($value)
+    {
+        return $this->setParameter('sellerPaypalAccountId', $value);
+    }
+
+    public function getSellerPaypalAccountId()
+    {
+        return $this->getParameter('sellerPaypalAccountId');
+    }
+
+    protected function getBaseData()
     {
         $data = array();
-        $data['METHOD'] = $method;
         $data['VERSION'] = static::API_VERSION;
         $data['USER'] = $this->getUsername();
         $data['PWD'] = $this->getPassword();
@@ -140,11 +256,14 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data = array();
         $items = $this->getItems();
         if ($items) {
+            $data["PAYMENTREQUEST_0_ITEMAMT"] = 0;
             foreach ($items as $n => $item) {
                 $data["L_PAYMENTREQUEST_0_NAME$n"] = $item->getName();
                 $data["L_PAYMENTREQUEST_0_DESC$n"] = $item->getDescription();
                 $data["L_PAYMENTREQUEST_0_QTY$n"] = $item->getQuantity();
                 $data["L_PAYMENTREQUEST_0_AMT$n"] = $this->formatCurrency($item->getPrice());
+
+                $data["PAYMENTREQUEST_0_ITEMAMT"] += $item->getQuantity() * $this->formatCurrency($item->getPrice());
             }
         }
 
