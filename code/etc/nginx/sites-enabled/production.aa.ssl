@@ -1,0 +1,37 @@
+server {
+    
+    listen 80 default deferred;
+    listen 443 ssl;
+    server_name aa.production.com;
+    
+    #if you turn it it will force ssl
+    #ssl on; 
+
+    ssl_certificate /etc/nginx/sslcerts/gd.chained.to.dashboard.helppain.net.crt;
+    ssl_certificate_key /etc/nginx/sslcerts/dashboard.helppain.net.key;
+
+    sendfile off;
+
+    root /home/andrewy/workspace/aa/code/var/site/public;
+    access_log /var/log/nginx/aa.log;
+    index index.php index.html index.htm;
+
+    location ~ /\. {
+        deny all;
+    }
+
+    location / {
+            try_files $uri $uri/ /index.php?$query_string;
+       }
+
+    # pass the PHP scripts to FastCGI server listening on /var/run/php5-fpm.sock
+    location ~ \.php$ {
+                        try_files $uri /index.php =404;
+                        fastcgi_pass unix:/var/run/php5-fpm.sock;
+                        fastcgi_index index.php;
+                        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                        include fastcgi_params;
+        }
+ }
+
+    

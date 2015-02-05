@@ -5,7 +5,7 @@ set :use_sudo, true
 
 set :keep_releases, 2
 
-set :application_name, "cronrat"
+set :application_name, "aa"
 
 set :user, Capistrano::CLI.ui.ask("User for deploy:")
 set :password, Capistrano::CLI.ui.ask("Password for user #{user}:"){|q|q.echo = false}
@@ -13,9 +13,8 @@ set :ssh_options, {:user => user, :password => password, :forward_agent => true 
 set :scm, "git"
 set :user, "#{user}"
 set :scm_passphrase, "#{password}"
-set :repository, "https://github.com/n0needt0/cronrat"
+set :repository, "https://github.com/n0needt0/aa"
 
-#set :scm_command, "git_umask"
 set :branch, "master"
 set :deploy_via, :remote_cache
 set :scm_auth_cache, false
@@ -77,7 +76,7 @@ namespace :deploy do
 
   desc "Write current revision to "
   task :publish_revision do
-    run "content=`cat #{deploy_to}/current/REVISION`;ip=`ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`; sed -i \"s/MY_REVISION/$content-$ip/g\" #{deploy_to}/current/code/var/cronrat/app/views/partials/version.blade.php"
+    run "content=`cat #{deploy_to}/current/REVISION`;ip=`ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`; sed -i \"s/MY_REVISION/$content-$ip/g\" #{deploy_to}/current/code/var/aa/app/views/partials/version.blade.php"
   end
   
   desc "clean up old releases"
@@ -87,9 +86,9 @@ namespace :deploy do
   
   desc "write backup job"
     task :make_backup_job do
-    run "sed -i \"s/%APPLICATION%/cronrat/g\" #{deploy_to}/current/code/backup/bin/db.sh"
-    run "sed -i \"s/%DBUSER%/cronrat/g\" #{deploy_to}/current/code/backup/bin/db.sh"
-    run "sed -i \"s/%DBPASSWORD%/cronrat#1/g\" #{deploy_to}/current/code/backup/bin/db.sh"
+    run "sed -i \"s/%APPLICATION%/APPLICATIONNAME/g\" #{deploy_to}/current/code/backup/bin/db.sh"
+    run "sed -i \"s/%DBUSER%/DBUSER/g\" #{deploy_to}/current/code/backup/bin/db.sh"
+    run "sed -i \"s/%DBPASSWORD%/DBPASSWORD#1/g\" #{deploy_to}/current/code/backup/bin/db.sh"
     
     unless remote_file_exists?("/var/backup")
       sudo "mkdir -p /var/backup"
@@ -136,26 +135,23 @@ namespace :deploy do
         
         sudo "chown -R www-data:root /var/log/#{application}"
         
-        #move cronrat server
-         unless remote_file_exists?("/var/cronrat_bin")
-              sudo "mkdir -p /var/cronrat_bin"
-         end
-         
-         #link executable
-         sudo "ln -sf #{deploy_to}/current/code/cronrat_server/src/cronrat-server /var/cronrat_bin/"
-         sudo "ln -sf #{deploy_to}/current/code/cronrat_server/src/cronrat-server.json /var/cronrat_bin/"
-         sudo "chmod -R 777 /var/cronrat_bin/cronrat-server"
-         sudo "service cronrat restart"
+  
   end
   
   
-  desc "get correct apache"
-     task :get_correct_apache_conf do
-     sudo "mv #{deploy_to}/current/code/etc/nginx/sites-enabled/#{stage}.#{application_name} /etc/nginx/sites-enabled/#{application_name}"
+  desc "get correct web server configigurations"
+    task :get_correct_webserver_conf do
+    sudo "mv #{deploy_to}/current/code/etc/nginx/sites-enabled/#{stage}.#{application_name} /etc/nginx/sites-enabled/#{application_name}"
+      
+    unless remote_file_exists?("/etc/nginx/sslcerts")
+        sudo "mkdir -p /etc/nginx/sslcerts"
+    end
+
+    sudo "mv #{deploy_to}/current/code/etc/nginx/sslcerts/* /etc/nginx/sslcerts/"
   end
 
-  desc "Reload Apache"
-  task :reload_apache do
+  desc "Reload Webserver"
+  task :reload_webserver do
     unless remote_file_exists?(apache_root)
       sudo "ln -sf #{deploy_to}/current/code/var/#{application_name} #{apache_root}"
     end
@@ -175,7 +171,7 @@ before 'deploy', 'deploy:chown_to_user'
 after 'deploy','deploy:get_correct_config'
 
 #get correct deploy apache conf version
-after 'deploy','deploy:get_correct_apache_conf'
+after 'deploy','deploy:get_correct_webserver_conf'
 
 #change permission to www-data user
 after 'deploy', 'deploy:publish_revision'
@@ -193,6 +189,6 @@ after 'deploy', 'deploy:remove_old'
 after 'deploy', 'deploy:chown_to_www_data'
 
 #restart apache
-after 'deploy', 'deploy:reload_apache'
+after 'deploy', 'deploy:reload_webserver'
 
 

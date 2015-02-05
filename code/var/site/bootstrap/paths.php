@@ -52,6 +52,6 @@ return array(
 	|
 	*/
 
-	'storage' => '/opt/aa_site_cache',
+	'storage' => '/opt/aa_cache',
 
 );

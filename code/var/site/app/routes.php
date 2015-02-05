@@ -11,11 +11,12 @@
 |
 */
 
-Route::get('/', function()
+Route::group(array('domain' => 'aa.this.com'), function()
 {
-	return View::make('hello');
+    Route::get('tools/ort', array('as' => 'ort', 'uses' => 'ToolsController@showOrt'));
+    Route::get('tools/cageaid', array('as' => 'cageaid', 'uses' => 'ToolsController@showCageaid'));
+    Route::get('tools/phq9', array('as' => 'phq9', 'uses' => 'ToolsController@showPhq9'));
 });
-
 /*
 Route::group(array('domain' => 'base.this.com'), function()
 {
