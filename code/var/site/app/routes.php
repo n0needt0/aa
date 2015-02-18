@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(array('domain' => 'aa.this.com'), function()
+Route::group(array('domain' => 'aaps.this.com'), function()
 {
     Route::get('tools/ort', array('as' => 'ort', 'uses' => 'ToolsController@showOrt'));
     Route::get('tools/cageaid', array('as' => 'cageaid', 'uses' => 'ToolsController@showCageaid'));
