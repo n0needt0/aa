@@ -48,10 +48,14 @@ class ToolsController extends BaseController {
 		{
 			return $k;
 		}else{
-			return "self"
+			return "self";
 		}
 	}		
 
+	public function showTest()
+	{
+		return View::make('tools/test');
+	}
 	
 	public function showOrt()
 	{

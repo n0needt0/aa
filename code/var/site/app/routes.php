@@ -13,6 +13,7 @@
 
 Route::group(array('domain' => 'aaps.this.com'), function()
 {
+    Route::get('tools', 'ToolsController@showTest');
     Route::get('tools/ort', 'ToolsController@showOrt');
     Route::post('tools/ort', 'ToolsController@setOrt');
     Route::get('tools/cageaid', 'ToolsController@showCageaid');
