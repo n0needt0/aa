@@ -1,8 +1,8 @@
 server {
     
-    listen 80 default deferred;
-    listen 443 ssl;
-    server_name aa.this.com;
+    listen 8080 default deferred;
+    listen 4434 ssl;
+    server_name aaps.this.com;
     
     #if you turn it it will force ssl
     #ssl on; 
@@ -12,7 +12,7 @@ server {
 
     sendfile off;
 
-    root /home/andrewy/workspace/aa/code/var/site/public;
+    root /home/andrewy/workspace/aaps_app/code/var/site/public;
     access_log /var/log/nginx/aa.log;
     index index.php index.html index.htm;
 

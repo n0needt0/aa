@@ -14,20 +14,85 @@ class ToolsController extends BaseController {
 	|	Route::get('/', 'HomeController@showWelcome');
 	|
 	*/
+	private function getLang() //string
+	{
+		$lang = Input::get("lang");
+		if ($lang == "es")
+		{
+			return "es";
+		}
 
+		return "en";
+	}
+
+	private function getKey() //string
+	{
+		$k = Input::get("ref");
+
+
+		if ($k != "")
+		{
+			return $k;
+		}else{
+			echo "bad ref";
+			die;
+		}
+	}
+
+	private function getProxy() //string
+	{
+		$k = Input::get("proxy");
+
+
+		if ($k != "")
+		{
+			return $k;
+		}else{
+			return "self"
+		}
+	}		
+
+	
 	public function showOrt()
 	{
-		return View::make('tools/ort');
+		$data["lang"] = self::getLang();
+		$data["ref"] = self::getKey();
+		$data["proxy"] = self::getProxy();
+		return View::make('tools/ort')->with($data);
+	}
+
+	public function setOrt()
+	{
+		print_r($_REQUEST);
+		//return View::make('tools/cageaid')->with($data);
 	}
 
 	public function showCageaid()
 	{
-		return View::make('tools/cageaid');
+		$data["lang"] = self::getLang();
+		$data["ref"] = self::getKey();
+		$data["proxy"] = self::getProxy();
+		return View::make('tools/cageaid')->with($data);
+	}
+
+	public function setCageaid()
+	{
+		print_r($_REQUEST);
+		//return View::make('tools/cageaid')->with($data);
 	}
 
 	public function showPhq9()
 	{
-		return View::make('tools/phq9');
+		$data["lang"] = self::getLang();
+		$data["ref"] = self::getKey();
+		$data["proxy"] = self::getProxy();
+		return View::make('tools/phq9')->with($data);
+	}
+
+	public function setPhq9()
+	{
+		print_r($_REQUEST);
+		//return View::make('tools/cageaid')->with($data);
 	}
 
 

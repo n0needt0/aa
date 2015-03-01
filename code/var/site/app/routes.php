@@ -13,9 +13,12 @@
 
 Route::group(array('domain' => 'aaps.this.com'), function()
 {
-    Route::get('tools/ort', array('as' => 'ort', 'uses' => 'ToolsController@showOrt'));
-    Route::get('tools/cageaid', array('as' => 'cageaid', 'uses' => 'ToolsController@showCageaid'));
-    Route::get('tools/phq9', array('as' => 'phq9', 'uses' => 'ToolsController@showPhq9'));
+    Route::get('tools/ort', 'ToolsController@showOrt');
+    Route::post('tools/ort', 'ToolsController@setOrt');
+    Route::get('tools/cageaid', 'ToolsController@showCageaid');
+    Route::post('tools/cageaid', 'ToolsController@setCageaid');
+    Route::get('tools/phq9', 'ToolsController@showPhq9');
+    Route::post('tools/phq9', 'ToolsController@setPhq9');
 });
 /*
 Route::group(array('domain' => 'base.this.com'), function()

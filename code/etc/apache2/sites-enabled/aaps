@@ -1,0 +1,94 @@
+<VirtualHost  *:80>
+    ServerName aaps.this.com
+    ServerAlias aaps.this.com
+    ServerAdmin webmaster@trac.this.com
+
+    AllowEncodedSlashes On
+    DirectoryIndex index.php index.html
+    SetEnv HTTPS 1
+    RewriteEngine On
+    
+    RewriteCond %{HTTP_HOST} ^aaps\.this\.com$ [NC]
+    RewriteCond %{SERVER_PORT} !^443$ 
+    RewriteRule ^/(.*)   https://%{HTTP_HOST}/$1 [L,R]
+
+    DocumentRoot /home/andrewy/workspace/aaps_app/code/var/site/public
+	Alias /assets/  /home/andrewy/workspace/aa/code/var/site/public/assets
+	Alias /var/uploads/  /var/uploads/
+	<Directory /var/uploads>
+	     Options -Indexes
+	</Directory>
+	<Directory "/home/andrewy/workspace/aaps_app/code/var/site/public">
+	      Options All
+	      AllowOverride All
+	      Order allow,deny
+	      Allow from all
+	    RewriteEngine on
+	  </Directory>
+
+
+    ErrorLog /var/log/apache2/aaps_error.log
+
+    # Possible values include: debug, info, notice, warn, error, crit,
+    # alert, emerg.
+    LogLevel info
+
+    CustomLog /var/log/apache2/aaps_access.log combined
+    ServerSignature On
+
+    <Location /robots.txt>
+        SetHandler None
+    </Location>
+
+</VirtualHost>
+
+<VirtualHost  *:443>
+    
+    SSLEngine On
+    SSLCertificateFile /etc/apache2/sslcerts/ptrac.helppain.net.crt
+    SSLCertificateKeyFile /etc/apache2/sslcerts/ptrac.helppain.net.key
+    SSLCertificateChainFile /etc/apache2/sslcerts/gd_bundle.crt
+    SSLVerifyClient none
+    SSLOptions -StrictRequire
+
+    ServerName aaps.this.com
+    ServerAdmin webmaster@trac.this.com
+    DocumentRoot "/var/www/aaptrac"
+    AllowEncodedSlashes On
+    DirectoryIndex index.php index.html
+    SetEnv HTTPS 1
+    RewriteEngine On
+    
+    RewriteCond %{HTTP_HOST} ^aaps\.this\.com$ [NC]
+    RewriteCond %{SERVER_PORT} !^443$ 
+    RewriteRule ^/(.*)   https://%{HTTP_HOST}/$1 [L,R]
+
+    DocumentRoot /home/andrewy/workspace/aaps_app/code/var/site/public
+	Alias /assets/  /home/andrewy/workspace/aa/code/var/site/public/assets
+	Alias /var/uploads/  /var/uploads/
+	<Directory /var/uploads>
+	     Options -Indexes
+	</Directory>
+	<Directory "/home/andrewy/workspace/aaps_app/code/var/site/public">
+	      Options All
+	      AllowOverride All
+	      Order allow,deny
+	      Allow from all
+	    RewriteEngine on
+	  </Directory>
+
+
+    ErrorLog /var/log/apache2/aaps_error.log
+
+    # Possible values include: debug, info, notice, warn, error, crit,
+    # alert, emerg.
+    LogLevel info
+
+    CustomLog /var/log/apache2/aaps_access.log combined
+    ServerSignature On
+
+    <Location /robots.txt>
+        SetHandler None
+    </Location>
+
+    </VirtualHost>
