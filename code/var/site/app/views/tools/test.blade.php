@@ -36,5 +36,20 @@ label.error{color:red;
 <h3><a href="tools/phq9?ref=<?php echo time();?>&lang=en" data-ajax="false">self</a></h3>
 <h3><a href="tools/phq9?ref=<?php echo time();?>&lang=en&proxy=translator" data-ajax="false">proxy</a></h3>
 
+<h1>COMM</h1>
+<h3><a href="tools/comm" data-ajax="false">badref</a></h3>
+<h3><a href="tools/comm?ref=<?php echo time();?>" data-ajax="false">base</a></h3>
+<h3><a href="tools/comm?ref=<?php echo time();?>&lang=en" data-ajax="false">english</a></h3>
+<h3><a href="tools/comm?ref=<?php echo time();?>&lang=es" data-ajax="false">spanish</a></h3>
+<h3><a href="tools/comm?ref=<?php echo time();?>&lang=en" data-ajax="false">self</a></h3>
+<h3><a href="tools/comm?ref=<?php echo time();?>&lang=en&proxy=translator" data-ajax="false">proxy</a></h3>
+
+<h1>SOAPR</h1>
+<h3><a href="tools/soapr" data-ajax="false">badref</a></h3>
+<h3><a href="tools/soapr?ref=<?php echo time();?>" data-ajax="false">base</a></h3>
+<h3><a href="tools/soapr?ref=<?php echo time();?>&lang=en" data-ajax="false">english</a></h3>
+<h3><a href="tools/soapr?ref=<?php echo time();?>&lang=es" data-ajax="false">spanish</a></h3>
+<h3><a href="tools/soapr?ref=<?php echo time();?>&lang=en" data-ajax="false">self</a></h3>
+<h3><a href="tools/soapr?ref=<?php echo time();?>&lang=en&proxy=translator" data-ajax="false">proxy</a></h3>
 </div>
 @stop

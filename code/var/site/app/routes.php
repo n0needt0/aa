@@ -20,6 +20,10 @@ Route::group(array('domain' => 'aaps.this.com'), function()
     Route::post('tools/cageaid', 'ToolsController@setCageaid');
     Route::get('tools/phq9', 'ToolsController@showPhq9');
     Route::post('tools/phq9', 'ToolsController@setPhq9');
+    Route::get('tools/soapr', 'ToolsController@showSoapr');
+    Route::post('tools/soapr', 'ToolsController@setSoapr');
+    Route::get('tools/comm', 'ToolsController@showComm');
+    Route::post('tools/comm', 'ToolsController@setComm');
 });
 /*
 Route::group(array('domain' => 'base.this.com'), function()

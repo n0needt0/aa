@@ -99,5 +99,34 @@ class ToolsController extends BaseController {
 		//return View::make('tools/cageaid')->with($data);
 	}
 
+	public function showSoapr()
+	{
+		$data["lang"] = self::getLang();
+		$data["ref"] = self::getKey();
+		$data["proxy"] = self::getProxy();
+		return View::make('tools/soapr')->with($data);
+	}
+
+	public function setSoapr()
+	{
+		print_r($_REQUEST);
+		//return View::make('tools/cageaid')->with($data);
+	}
+
+	public function showComm()
+	{
+		$data["lang"] = self::getLang();
+		$data["ref"] = self::getKey();
+		$data["proxy"] = self::getProxy();
+		return View::make('tools/comm')->with($data);
+	}
+
+	public function setComm()
+	{
+		print_r($_REQUEST);
+		//return View::make('tools/cageaid')->with($data);
+	}
+
+
 
 }
