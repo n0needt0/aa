@@ -1,0 +1,124 @@
+FORMAT: 1A
+
+HOST: https://snoopy.nopasa.com/
+
+# Snoopy Api Documentation
+
+Snoopy API is protected with JWT. All requests, require JWT token.
+JWToken shall contain element "token", that is is a data key.
+
++ Headers 
+ 
+        "Authorize: Bearer yout-JWT-token"
+
+
+## Scan Collection [/scans]
+
+### [/scans/{limit}] [GET]
+
+Retrieves last scan document(s). by default retrieves last inserted document.
+
++ Optional URL parameters 
+    + from (number) unixtimestamp
+    + to (number) unixtimestamp
+    + page_size (number) Optional size of documents to return per page, default 1
+    + page_number (number) Optional default 1
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+            "scans":[
+                        {
+                            "_id":"string"
+                            "token":"string",
+                            "alert":"bool",
+                            "start":"int64",
+                            "finish":"int64",
+                            "diff":{"map[string][]string"},
+                            "scan":{"map[string][]string"}
+                        }
+                    ]
+            }
+
+### Create a New Scan [POST]
+
+Insert scan, using this action
+
++ Request (application/json)
+
+            {
+                "token":"string",
+                "alert":"bool",
+                "alert111":"bool",
+                "start":"int64",
+                "finish":"int64",
+                "diff":{"map[string][]string"},
+                "scan":{"map[string][]string"}
+            }
+
++ Response 200 (application/json)
+
+## Vetted Collection [/vetts]
+
+### List all Vetted Macs [GET]
+
+This request would return list of all vetted mac addresses ever observed
+
++ Response 200 (application/json)
+
+    + Body
+
+            [
+                {
+                  "mac": "string mac address",
+                  "description": "device description"
+                  "vetted": "unix time"
+                }
+            ]
+
+### Insert Vetted Device [POST]
+
+Insert vetted device, or updates for given mac
+address using this action
+
++ Request (application/json)
+
+            {   
+                "mac":"string",
+                "description":"bool"
+            }
+
+
++ Response 200 (application/json)
+    + Headers
+
+            Location: /vetts/{id}
+
+
+    + Body
+
+            [
+                {
+                  "mac": "string mac address",
+                  "description": "device description"
+                  "vetted": "unix time"
+                }
+            ]
+
+## Utilities Collection [/ping]
+
+### List all Vetted Macs [GET]
+
+This request would return OK or error
+
++ Response 200 (application/json)
+
+    + Body
+
+            [
+                {
+                  "ping": "OK",
+                }
+            ]
